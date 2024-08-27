@@ -30,23 +30,6 @@ function App() {
                         bottom: 570, // 2 cm
                         left: 720, // 3 cm
                     },
-                    footer: {
-                        children: [
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "Página ",
-                                        size: 24, // Tamanho 12pt
-                                    }),
-                                    new TextRun({
-                                        children: [PageNumber.CURRENT],
-                                        size: 24, // Tamanho 12pt
-                                    }),
-                                ],
-                                alignment: AlignmentType.RIGHT,
-                            }),
-                        ],
-                    },
                 },
                 children: parseTexto(texto),
             }],
@@ -77,7 +60,9 @@ function App() {
                         new TextRun({
                             text: linha.slice(2),
                             bold: true,
-                            color: "000000",
+                            color: "000000", // Preto
+                            font: "Times New Roman", // Fonte Times New Roman
+                            size: 24, // Tamanho 12pt
                         }),
                     ],
                     heading: 'Heading1',
@@ -90,7 +75,9 @@ function App() {
                         new TextRun({
                             text: linha.slice(3),
                             bold: true,
-                            color: "000000",
+                            color: "000000", // Preto
+                            font: "Times New Roman", // Fonte Times New Roman
+                            size: 24, // Tamanho 12pt
                         }),
                     ],
                     heading: 'Heading2',
@@ -107,11 +94,12 @@ function App() {
                                 new TextRun({
                                     text: citaçãoCompleta,
                                     italics: true,
-                                    color: "000000", // Preto
+                                    font: "Times New Roman", // Fonte Times New Roman
+                                    size: 20, // Tamanho 10pt para citações longas
                                 }),
                             ],
                             spacing: { after: 200 }, // 1,0 cm
-                            indent: { left: 720 }, // 1,25 cm
+                            indent: { left: 720 }, // 4 cm de recuo
                             alignment: AlignmentType.JUSTIFY,
                         }));
                         citaçõesAdicionadas.add(citaçãoCompleta); // Adiciona a citação ao conjunto
@@ -127,7 +115,8 @@ function App() {
                                         new TextRun({
                                             text: citação,
                                             italics: true,
-                                            color: "000000", // Preto
+                                            font: "Times New Roman", // Fonte Times New Roman
+                                            size: 24, // Tamanho 12pt
                                         }),
                                     ],
                                     spacing: { after: 200 }, // 1,0 cm
@@ -139,14 +128,40 @@ function App() {
                         });
                     }
 
-                    // Adiciona o texto normal
-                    if (linha) {
+                    // Identificar citações indiretas
+                    const citacaoIndireta = linha.match(/([A-Z][a-zA-Z]*),?\s*\d{4}/);
+                    if (citacaoIndireta) {
+                        const textoSemCitação = linha.replace(citacaoIndireta[0], '').trim();
                         elementos.push(new Paragraph({
-                            text: linha,
+                            children: [
+                                new TextRun({
+                                    text: `${citacaoIndireta[0]} (ano). `,
+                                    italics: true,
+                                    font: "Times New Roman", // Fonte Times New Roman
+                                    size: 24, // Tamanho 12pt
+                                }),
+                                new TextRun({
+                                    text: textoSemCitação,
+                                    font: "Times New Roman", // Fonte Times New Roman
+                                    size: 24, // Tamanho 12pt
+                                }),
+                            ],
                             spacing: { after: 200, line: 240 }, // 1,5 cm
                             indent: { left: 720 }, // 1,25 cm
                             alignment: AlignmentType.JUSTIFY,
                         }));
+                    } else {
+                        // Adiciona o texto normal
+                        if (linha) {
+                            elementos.push(new Paragraph({
+                                text: linha,
+                                spacing: { after: 200, line: 240 }, // 1,5 cm
+                                indent: { left: 720 }, // 1,25 cm
+                                alignment: AlignmentType.JUSTIFY,
+                                font: "Times New Roman", // Fonte Times New Roman
+                                size: 24, // Tamanho 12pt
+                            }));
+                        }
                     }
                 }
             }

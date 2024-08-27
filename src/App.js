@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Document, Packer, Paragraph, AlignmentType, TextRun } from 'docx';
+import { Document, Packer, Paragraph, AlignmentType, TextRun, PageNumber } from 'docx';
 import './styles.css';
 
 function App() {
@@ -25,10 +25,27 @@ function App() {
             sections: [{
                 properties: {
                     margin: {
-                        top: 720, // 3 cm em twips
-                        right: 570, // 2 cm em twips
-                        bottom: 570, // 2 cm em twips
-                        left: 720, // 3 cm em twips
+                        top: 720, // 3 cm
+                        right: 570, // 2 cm
+                        bottom: 570, // 2 cm
+                        left: 720, // 3 cm
+                    },
+                    footer: {
+                        children: [
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: "Página ",
+                                        size: 24, // Tamanho 12pt
+                                    }),
+                                    new TextRun({
+                                        children: [PageNumber.CURRENT],
+                                        size: 24, // Tamanho 12pt
+                                    }),
+                                ],
+                                alignment: AlignmentType.RIGHT,
+                            }),
+                        ],
                     },
                 },
                 children: parseTexto(texto),
@@ -48,17 +65,64 @@ function App() {
     const parseTexto = (texto) => {
         const linhas = texto.split('\n');
         const elementos = [];
+        const citaçõesAdicionadas = new Set(); // Para rastrear citações já adicionadas
 
         linhas.forEach((linha) => {
-            linha = linha.trim(); // Remove espaços em branco no início e no final
+            linha = linha.trim();
 
+            // Identificar citações longas
+            const citaçõesLongas = linha.match(/"([^"]+)"\s*\(([^)]+)\)/);
+            if (citaçõesLongas) {
+                const citaçãoCompleta = `${citaçõesLongas[0]}`;
+                if (!citaçõesAdicionadas.has(citaçãoCompleta)) {
+                    elementos.push(new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: citaçãoCompleta,
+                                italics: true,
+                                color: "000000", // Preto
+                            }),
+                        ],
+                        spacing: { after: 200 }, // 1,0 cm
+                        indent: { left: 720 }, // 1,25 cm
+                        alignment: AlignmentType.JUSTIFY,
+                    }));
+                    citaçõesAdicionadas.add(citaçãoCompleta); // Adiciona a citação ao conjunto
+                }
+                return; // Pula para a próxima linha após adicionar a citação
+            }
+
+            // Identificar citações simples
+            const citaçõesSimples = linha.match(/"([^"]+)"/g);
+            if (citaçõesSimples) {
+                citaçõesSimples.forEach((citação) => {
+                    if (!citaçõesAdicionadas.has(citação)) {
+                        elementos.push(new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: citação,
+                                    italics: true,
+                                    color: "000000", // Preto
+                                }),
+                            ],
+                            spacing: { after: 200 }, // 1,0 cm
+                            indent: { left: 720 }, // 1,25 cm
+                            alignment: AlignmentType.JUSTIFY,
+                        }));
+                        citaçõesAdicionadas.add(citação); // Adiciona a citação ao conjunto
+                    }
+                });
+                return; // Pula para a próxima linha após adicionar a citação
+            }
+
+            // Identificar títulos e subtítulos
             if (linha.startsWith('# ')) {
                 elementos.push(new Paragraph({
                     children: [
                         new TextRun({
                             text: linha.slice(2),
                             bold: true,
-                            color: "000000", // Cor preta
+                            color: "000000",
                         }),
                     ],
                     heading: 'Heading1',
@@ -71,17 +135,17 @@ function App() {
                         new TextRun({
                             text: linha.slice(3),
                             bold: true,
-                            color: "000000", // Cor preta
+                            color: "000000",
                         }),
                     ],
                     heading: 'Heading2',
                     spacing: { after: 200 },
                 }));
-            } else if (linha) { // Adiciona apenas se a linha não estiver vazia
+            } else if (linha) {
                 elementos.push(new Paragraph({
                     text: linha,
-                    spacing: { after: 200 },
-                    indent: { left: 720 }, // 1,25 cm de recuo
+                    spacing: { after: 200, line: 240 }, // 1,5 cm
+                    indent: { left: 720 }, // 1,25 cm
                     alignment: AlignmentType.JUSTIFY,
                 }));
             }
@@ -97,10 +161,9 @@ function App() {
                 <strong>Instruções:</strong>
                 <p>Para identificar títulos e subtítulos, utilize as seguintes marcações:</p>
                 <ul>
-                    <li><strong>Título:</strong> Inicie a linha com <code># Título</code> (por exemplo, <code># Introdução</code>)</li>
-                    <li><strong>Subtítulo:</strong> Inicie a linha com <code>## Subtítulo</code> (por exemplo, <code>## Objetivos</code>)</li>
+                    <li><strong>Título:</strong> Inicie a linha com <code># Título</code></li>
+                    <li><strong>Subtítulo:</strong> Inicie a linha com <code>## Subtítulo</code></li>
                 </ul>
-                
             </div>
             <textarea
                 value={texto}

@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ABNT-Generator/static/css/main.0e6f69f1.css",
+    "main.js": "/ABNT-Generator/static/js/main.17bf7c9e.js",
+    "static/js/453.e39618cd.chunk.js": "/ABNT-Generator/static/js/453.e39618cd.chunk.js",
+    "index.html": "/ABNT-Generator/index.html",
+    "main.0e6f69f1.css.map": "/ABNT-Generator/static/css/main.0e6f69f1.css.map",
+    "main.17bf7c9e.js.map": "/ABNT-Generator/static/js/main.17bf7c9e.js.map",
+    "453.e39618cd.chunk.js.map": "/ABNT-Generator/static/js/453.e39618cd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e6f69f1.css",
+    "static/js/main.17bf7c9e.js"
+  ]
+}

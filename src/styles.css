@@ -1,0 +1,96 @@
+/* Estilos Gerais */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #bb86fc; /* Azul claro */
+}
+
+.instructions {
+    background-color: #2e2e2e;
+    border-left: 5px solid #6200ea; /* Azul mais escuro */
+    padding: 15px;
+    margin: 20px 0;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2e2e2e;
+    color: #ffffff;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    transition: background-color 0.3s;
+}
+
+textarea:focus {
+    background-color: #444;
+    outline: none;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #6200ea; /* Azul */
+    background-color: #2e2e2e;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+button {
+    background-color: #6200ea; /* Azul */
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #3700b3; /* Azul mais escuro */
+    transform: translateY(-2px);
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #cccccc;
+}
+
+footer p {
+    margin: 0;
+}

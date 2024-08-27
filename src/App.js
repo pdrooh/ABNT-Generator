@@ -70,51 +70,6 @@ function App() {
         linhas.forEach((linha) => {
             linha = linha.trim();
 
-            // Identificar citações longas
-            const citaçõesLongas = linha.match(/"([^"]+)"\s*\(([^)]+)\)/);
-            if (citaçõesLongas) {
-                const citaçãoCompleta = `${citaçõesLongas[0]}`;
-                if (!citaçõesAdicionadas.has(citaçãoCompleta)) {
-                    elementos.push(new Paragraph({
-                        children: [
-                            new TextRun({
-                                text: citaçãoCompleta,
-                                italics: true,
-                                color: "000000", // Preto
-                            }),
-                        ],
-                        spacing: { after: 200 }, // 1,0 cm
-                        indent: { left: 720 }, // 1,25 cm
-                        alignment: AlignmentType.JUSTIFY,
-                    }));
-                    citaçõesAdicionadas.add(citaçãoCompleta); // Adiciona a citação ao conjunto
-                }
-                return; // Pula para a próxima linha após adicionar a citação
-            }
-
-            // Identificar citações simples
-            const citaçõesSimples = linha.match(/"([^"]+)"/g);
-            if (citaçõesSimples) {
-                citaçõesSimples.forEach((citação) => {
-                    if (!citaçõesAdicionadas.has(citação)) {
-                        elementos.push(new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: citação,
-                                    italics: true,
-                                    color: "000000", // Preto
-                                }),
-                            ],
-                            spacing: { after: 200 }, // 1,0 cm
-                            indent: { left: 720 }, // 1,25 cm
-                            alignment: AlignmentType.JUSTIFY,
-                        }));
-                        citaçõesAdicionadas.add(citação); // Adiciona a citação ao conjunto
-                    }
-                });
-                return; // Pula para a próxima linha após adicionar a citação
-            }
-
             // Identificar títulos e subtítulos
             if (linha.startsWith('# ')) {
                 elementos.push(new Paragraph({
@@ -141,13 +96,59 @@ function App() {
                     heading: 'Heading2',
                     spacing: { after: 200 },
                 }));
-            } else if (linha) {
-                elementos.push(new Paragraph({
-                    text: linha,
-                    spacing: { after: 200, line: 240 }, // 1,5 cm
-                    indent: { left: 720 }, // 1,25 cm
-                    alignment: AlignmentType.JUSTIFY,
-                }));
+            } else {
+                // Identificar citações longas
+                const citaçõesLongas = linha.match(/"([^"]+)"\s*\(([^)]+)\)/);
+                if (citaçõesLongas) {
+                    const citaçãoCompleta = `${citaçõesLongas[0]}`;
+                    if (!citaçõesAdicionadas.has(citaçãoCompleta)) {
+                        elementos.push(new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: citaçãoCompleta,
+                                    italics: true,
+                                    color: "000000", // Preto
+                                }),
+                            ],
+                            spacing: { after: 200 }, // 1,0 cm
+                            indent: { left: 720 }, // 1,25 cm
+                            alignment: AlignmentType.JUSTIFY,
+                        }));
+                        citaçõesAdicionadas.add(citaçãoCompleta); // Adiciona a citação ao conjunto
+                    }
+                } else {
+                    // Identificar citações simples
+                    const citaçõesSimples = linha.match(/"([^"]+)"/g);
+                    if (citaçõesSimples) {
+                        citaçõesSimples.forEach((citação) => {
+                            if (!citaçõesAdicionadas.has(citação)) {
+                                elementos.push(new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: citação,
+                                            italics: true,
+                                            color: "000000", // Preto
+                                        }),
+                                    ],
+                                    spacing: { after: 200 }, // 1,0 cm
+                                    indent: { left: 720 }, // 1,25 cm
+                                    alignment: AlignmentType.JUSTIFY,
+                                }));
+                                citaçõesAdicionadas.add(citação); // Adiciona a citação ao conjunto
+                            }
+                        });
+                    }
+
+                    // Adiciona o texto normal
+                    if (linha) {
+                        elementos.push(new Paragraph({
+                            text: linha,
+                            spacing: { after: 200, line: 240 }, // 1,5 cm
+                            indent: { left: 720 }, // 1,25 cm
+                            alignment: AlignmentType.JUSTIFY,
+                        }));
+                    }
+                }
             }
         });
 

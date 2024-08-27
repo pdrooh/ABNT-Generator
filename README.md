@@ -1,70 +1,51 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Plataforma de Formatação de Textos
 
-In the project directory, you can run:
+## Descrição
 
-### `npm start`
+A **Plataforma de Formatação de Textos** é uma aplicação web desenvolvida em React que permite aos usuários formatar textos de acordo com as normas da ABNT. A aplicação aceita entradas de texto diretamente ou através de arquivos, permitindo a identificação de títulos e subtítulos usando marcações simples.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Funcionalidades
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Entrada de Texto**: Os usuários podem colar texto diretamente na área de texto ou carregar arquivos de texto.
+- **Formatação Automática**: O texto é automaticamente formatado em um documento Word (.docx) com títulos e subtítulos destacados.
+- **Interface Intuitiva**: A interface é amigável e fácil de usar, com instruções claras sobre como formatar o texto.
+- **Download do Documento**: Após a formatação, os usuários podem baixar o documento gerado.
 
-### `npm test`
+## Tecnologias Utilizadas
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **docx**: Biblioteca para criação de documentos Word em JavaScript.
+- **CSS**: Para estilização da interface.
 
-### `npm run build`
+## Como Usar
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/<seu-usuario>/<nome-do-repositorio>.git
+   ```
+2. Navegue até o diretório do projeto:
+   ```bash
+   cd <nome-do-repositorio>
+   ```
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
+4. Inicie a aplicação:
+   ```bash
+   npm start
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Instruções de Formatação
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para identificar títulos e subtítulos, utilize as seguintes marcações:
 
-### `npm run eject`
+- **Título**: Inicie a linha com `# Título` (exemplo: `# Introdução`)
+- **Subtítulo**: Inicie a linha com `## Subtítulo` (exemplo: `## Objetivos`)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
